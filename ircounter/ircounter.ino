@@ -27,8 +27,8 @@ void loop() {
  
   lcd1.setCursor(6, 1);
   lcd2.setCursor(6, 1);
-  sensorValue1 = analogRead(personin);
-  sensorValue2 = analogRead(personout);
+  sensorValue1 = digitalRead(personin);
+  sensorValue2 = digitalRead(personout);
   thValue = analogRead(th);
   
   
@@ -38,21 +38,22 @@ void loop() {
   Serial.print(sensorValue1);
   Serial.print("\nsensor2 = ");
   Serial.print(sensorValue2);
-  if(sensorValue1 > thValue){ 
-    digitalWrite(13, HIGH);
-    Serial.print("\nPerson In");
-    countin+=1;
-    lcd1.print(countin);
-    }
-  if(sensorValue2 > thValue){
+  if(sensorValue2 == 0){
     digitalWrite(13, HIGH);
     Serial.print("\nperson out");
     countout+=1;
     lcd2.print(countout);
     }
+  
+  if(sensorValue1 == 0){ 
+    digitalWrite(13, HIGH);
+    Serial.print("\nPerson In");
+    countin+=1;
+    lcd1.print(countin);
+    }
   else{
     digitalWrite(13, LOW);
     Serial.print("\nNo object in Front");
     }
-  delay(500);
+  delay(400);
 }
